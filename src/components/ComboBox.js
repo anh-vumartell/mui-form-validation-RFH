@@ -3,7 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
 
-export const ComboBox = (props) => {
+const ComboBox = (props) => {
   return (
     <div>
       <Autocomplete
@@ -18,3 +18,4 @@ export const ComboBox = (props) => {
     </div>
   );
 };
+export default ComboBox; 
