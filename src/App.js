@@ -1,28 +1,47 @@
-import {useState} from "react"; 
-import {useForm} from "react-hook-form"; 
-import './App.css';
-import ComboBox from "./components/ComboBox"; 
+import { useForm } from "react-hook-form";
+import "./App.css";
+import ComboBox from "./components/ComboBox";
 import RadioInput from "./components/RadioInput";
 import Button from "@mui/material/Button";
+import TextInput from "./components/TextInput";
+import { useCallback } from "react";
 
-
-import TextInput from "./components/TextInput"; 
+const statusOptions = [
+  { value: "employed", label: "employed" },
+  { value: "unemployed", label: "unemployed" },
+  { value: "student", label: "student" },
+  { value: "entrepreneur", label: "entrepreneur" },
+];
 function App() {
-   const [value, setValue] = useState("female");
-   const {register, handleSubmit, reset, control} = useForm(); 
+  const { handleSubmit, control, reset } = useForm();
 
-  console.log(control);
+  const onSubmit = useCallback(
+    (values) => {
+      console.log(values);
+      reset();
+    },
+    [reset]
+  );
+
   return (
     <div className="App">
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <h1>My Form</h1>
-         <TextInput name="Full name" control={control} label="Full name"/>
-         <TextInput name="Email" control={control} label="Email"/>
-     
-        <RadioInput name="Gender" control={control} label="Gender"/>
-        <ComboBox id="my-combo-box" width={600} options={["employed", "unemployed", "entrepreneur", "student"]} label="What is your current status?"/>
-        <Button type="submit" variant="contained">Submit</Button>
-        <Button variant="outlined">Reset</Button>
+        <TextInput name="fullName" label="Full name" control={control} />
+        <TextInput name="email" label="Email" control={control} />
+
+        <RadioInput name="gender" control={control} label="Gender" />
+        <ComboBox
+          name="currentStatus"
+          control={control}
+          id="my-combo-box"
+          width={600}
+          options={statusOptions}
+          label="What is your current status?"
+        />
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
     </div>
   );
